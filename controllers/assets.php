@@ -23,6 +23,7 @@ class Assets extends Controller {
 	function css()
 	{
 		header('content-type: text/css');
+		$this->load->view('cloudcrm-assets/dataTables_table_jui.css');
 		$this->load->view('cloudcrm-assets/cloudcrm.css');
 	}
 	
@@ -33,6 +34,7 @@ class Assets extends Controller {
 	{
 		header('content-type: text/javascript');
 		$this->load->view('cloudcrm-assets/cloudcrm.js');
+		$this->load->view('cloudcrm-assets/jquery.dataTables.min.js');
 	}
 }
 ?>

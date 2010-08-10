@@ -4,11 +4,9 @@
 	<meta name="robots" content="noindex,nofollow" />
 	<title>CloudCrm - <?=$this->config->item('displayname')?></title>
 	<link href="<?=base_url()?>assets/css/smoothness/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />
-	<link href="<?=base_url()?>assets/css/dataTables_table_jui.css" rel="stylesheet" type="text/css" />
 	<link href="<?=site_url('/cloudcrm/assets/css')?>" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="<?=base_url()?>assets/javascript/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?=base_url()?>assets/javascript/jquery-ui-1.8.2.custom.min.js"></script>
-	<script type="text/javascript" src="<?=base_url()?>assets/javascript/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="<?=site_url('/cloudcrm/assets/javascript')?>"></script>
 </head>
 <body>
