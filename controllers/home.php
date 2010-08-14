@@ -3,13 +3,13 @@ class Home extends Controller {
 	function Home() {
 		parent::Controller();
 		$this->cloudauth->sessioninit();
+		$this->config->load('cloudcrm');
+		$this->load->library('Customers');
 		$this->data['page_title'] = 'Home | Dashboard';
 		$this->data['nav'] = array('active', '', '', '', '', '', '', '');
-		$this->load->library('Customers');
 		
 		// Auth For Site Center
 		$this->authed = FALSE;
-		$this->config->load('cloudcrm');
 		$users = $this->config->item('ccrmUsers');
 		foreach($this->config->item('ccrmUsers') AS $key => $row)
 			if(($_SERVER['HTTP_HOST'] == $row['domain']) && ($this->data['me']['UsersEmail'] == $row['email']))

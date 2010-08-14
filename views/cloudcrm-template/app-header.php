@@ -2,8 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta name="robots" content="noindex,nofollow" />
-	<title>CloudCrm - <?=$this->config->item('displayname')?></title>
-	<link href="<?=base_url()?>assets/css/smoothness/jquery-ui-1.8.2.custom.css" rel="stylesheet" type="text/css" />
+	<title>Admins Only - CloudCrm</title>
+	
+	<?php if($this->config->item('ccrmtheme')) : ?>
+	<link href="<?=$this->config->item('ccrmtheme')?>" rel="stylesheet" type="text/css" />	
+	<?php else : ?>
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<?php endif; ?>
+	
 	<link href="<?=site_url('/cloudcrm/assets/css')?>" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.3/jquery-ui.min.js"></script>
@@ -12,7 +18,7 @@
 <body>
 	<div id="body-wrapper">
 		<div id="header">
-			<h1><?=$this->config->item('displayname')?></h1>
+			<h1>Admins Only - CloudCrm</h1>
 			<div id="user-nav">
 				Hi, <?=$me['UsersFirstName']?> 
 				

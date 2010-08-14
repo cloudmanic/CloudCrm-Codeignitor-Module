@@ -4,7 +4,10 @@ class Customers {
 	{
 		$this->CI =& get_instance();
 		$this->CI->load->dbutil();
-		$this->dbprefix = 'skyledger_';
+		$this->dbprefix = $this->CI->config->item('ccrmdbprefix');
+		$this->domain = $this->CI->config->item('ccrmdomain');
+		$this->prefixignore = $this->CI->config->item('ccrmignoreprefix');
+		$this->spacer = $this->CI->config->item('ccrmconfigspacer');
 	}
 	
 	//
@@ -32,23 +35,31 @@ class Customers {
 	function _get()
 	{
 		foreach($this->db->get('Config')->result_array() AS $key => $row)
-			$config[$row['ConfigName']] = $row['ConfigData'];
+			$config[$row['Config' . $this->spacer . 'Name']] = $row['Config' . $this->spacer . 'Data'];
 			
 		if(! isset($config['accountowner']))
 			$this->_migrate();
 		
+		// Add account Owner
+		if(! isset($config['accountowner'])) {
+			$data['Config' . $this->spacer . 'Name'] = 'accountowner';
+			$data['Config' . $this->spacer . 'Data'] = '1';
+			$this->db->insert('Config', $data);
+			$config['accountowner'] = $data['Config' . $this->spacer . 'Data'];
+		}
+		
 		// Add account start
 		if(! isset($config['accountstart'])) {
-			$data['ConfigName'] = 'accountstart';
-			$data['ConfigData'] = date('Y-n-j G:i:s');
+			$data['Config' . $this->spacer . 'Name'] = 'accountstart';
+			$data['Config' . $this->spacer . 'Data'] = date('Y-n-j G:i:s');
 			$this->db->insert('Config', $data);
-			$config['accountstart'] = $data['ConfigData'];
+			$config['accountstart'] = $data['Config' . $this->spacer . 'Data'];
 		}
 
 		// Add Click Track
 		if(! isset($config['clicktrack'])) {
-			$data['ConfigName'] = 'clicktrack';
-			$data['ConfigData'] = '';
+			$data['Config' . $this->spacer . 'Name'] = 'clicktrack';
+			$data['Config' . $this->spacer . 'Data'] = '';
 			$this->db->insert('Config', $data);
 			$config['clicktrack'] = '';
 		}
@@ -70,7 +81,7 @@ class Customers {
 	//
 	function _migrate()
 	{
-		file_get_contents("https://$this->url.skyledger.com");
+		file_get_contents("https://$this->url.$this->domain");
 	}
 	
 	//
@@ -78,13 +89,17 @@ class Customers {
 	//
 	function _loop_dbs($method)
 	{
-		$this->databases = $this->CI->dbutil->list_databases(); 
+		$this->databases = $this->CI->dbutil->list_databases(); 	
 			
 		foreach($this->databases AS $key => $row)
 		{
-			if(substr($row, 0, 10) !== $this->dbprefix) continue;
-			if($row == $this->dbprefix . 'blog') continue;
-			if($row == $this->dbprefix . 'www') continue;	
+			// Figure out what db's to ignore
+			if(substr($row, 0, strlen($this->dbprefix)) !== $this->dbprefix) continue;
+			if(isset($this->prefixignore) && is_array($this->prefixignore)) {
+				foreach($this->prefixignore AS $key2 => $row2)
+					if($row == $this->dbprefix . $row2) continue 2;				
+			}
+			
 			$this->url = str_ireplace($this->dbprefix, '', $row);		
 			$db['hostname'] = $this->CI->db->hostname;
 			$db['username'] = $this->CI->db->username;
