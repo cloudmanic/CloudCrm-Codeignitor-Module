@@ -35,7 +35,7 @@ class Customers {
 			$config[$row['ConfigName']] = $row['ConfigData'];
 			
 		if(! isset($config['accountowner']))
-			$this->migrate();
+			$this->_migrate();
 		
 		// Add account start
 		if(! isset($config['accountstart'])) {
@@ -53,12 +53,15 @@ class Customers {
 			$config['clicktrack'] = '';
 		}
 		
-		$owner = $this->CI->users_model->get_by_id($config['accountowner']);
+		if(! $owner = $this->CI->users_model->get_by_id($config['accountowner'])) {
+			$this->_migrate();
+			$owner = $this->CI->users_model->get_by_id($config['accountowner']);
+		}
+			
 		$owner['Config'] = $config;
 		
 		// Get page view count
 		$owner['PageTrackerCount'] = $this->db->count_all('PageTracker');
-		
 		$this->customers[] = $owner;
 	}
 	
