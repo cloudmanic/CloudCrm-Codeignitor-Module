@@ -25,7 +25,7 @@
 				<tbody>
 					<?php foreach($customers AS $key => $row) : ?>
 					<tr>
-						<td><?=date('n/j/Y', strtotime($row['Config']['accountstart']))?></td>
+						<td><?=date('n/j/y', strtotime($row['Config']['accountstart']))?></td>
 						<td><?=$row['UsersFirstName']?></td>
 						<td><?=$row['UsersLastName']?></td>
 						<td><?=$row['UsersEmail']?></td>
