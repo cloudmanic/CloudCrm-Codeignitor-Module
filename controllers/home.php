@@ -3,7 +3,7 @@ class Home extends Controller {
 	function Home() {
 		parent::Controller();
 		$this->cloudauth->sessioninit();
-		$this->config->load('cloudcrm');
+		cloudcrmauth();
 		$this->load->library('Customers');
 		$this->data['page_title'] = 'Home | Dashboard';
 		$this->data['nav'] = array('active', '', '', '', '', '', '', '');

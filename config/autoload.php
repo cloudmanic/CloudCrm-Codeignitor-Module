@@ -8,5 +8,5 @@
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('jquery-ui');
+$autoload['helper'] = array('cloudcrmauth', 'jquery-ui');
 ?>

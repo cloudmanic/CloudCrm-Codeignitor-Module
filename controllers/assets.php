@@ -3,6 +3,7 @@ class Assets extends Controller {
 	function Assets() {
 		parent::Controller();
 		$this->cloudauth->sessioninit();
+		cloudcrmauth();
 		$this->data['page_title'] = 'Home | Dashboard';
 		$this->data['nav'] = array('active', '', '', '', '', '', '', '');
 		$this->load->library('Customers');
