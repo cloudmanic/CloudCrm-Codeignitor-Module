@@ -37,7 +37,7 @@ class Customers {
 		foreach($this->db->get('Config')->result_array() AS $key => $row)
 			$config[$row['Config' . $this->spacer . 'Name']] = $row['Config' . $this->spacer . 'Data'];
 			
-		if(! isset($config['accountowner']))
+		if(! $this->db->table_exists('Users'))
 			$this->_migrate();
 		
 		// Add account Owner
